@@ -1,0 +1,949 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CA7652002D6BBD3D003D7F54 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9B31D22D63CF32001CB0AD /* WidgetKit.framework */; };
+		CA7652012D6BBD3D003D7F54 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9B31D42D63CF32001CB0AD /* SwiftUI.framework */; };
+		CA7652122D6BBD3F003D7F54 /* ChessEloWidgetExtensionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CA7651FF2D6BBD3D003D7F54 /* ChessEloWidgetExtensionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CA9B31D32D63CF32001CB0AD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9B31D22D63CF32001CB0AD /* WidgetKit.framework */; };
+		CA9B31D52D63CF32001CB0AD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9B31D42D63CF32001CB0AD /* SwiftUI.framework */; };
+		CA9B31E62D63CF34001CB0AD /* ChessEloWidgetExtensionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CA9B31D02D63CF32001CB0AD /* ChessEloWidgetExtensionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CAE53FCF2D4FDFE800A58C73 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = CAE53FCE2D4FDFE800A58C73 /* Auth */; };
+		CAE53FD12D4FDFE800A58C73 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = CAE53FD02D4FDFE800A58C73 /* Functions */; };
+		CAE53FD32D4FDFE800A58C73 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = CAE53FD22D4FDFE800A58C73 /* PostgREST */; };
+		CAE53FD52D4FDFE800A58C73 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = CAE53FD42D4FDFE800A58C73 /* Realtime */; };
+		CAE53FD72D4FDFE800A58C73 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = CAE53FD62D4FDFE800A58C73 /* Storage */; };
+		CAE53FD92D4FDFE800A58C73 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = CAE53FD82D4FDFE800A58C73 /* Supabase */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CA7652102D6BBD3F003D7F54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA94E66E2D4E78A500FCBF78 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA7651FE2D6BBD3D003D7F54;
+			remoteInfo = ChessEloWidgetExtensionExtension;
+		};
+		CA94E6872D4E78A700FCBF78 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA94E66E2D4E78A500FCBF78 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA94E6752D4E78A500FCBF78;
+			remoteInfo = ChessElo;
+		};
+		CA94E6912D4E78A700FCBF78 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA94E66E2D4E78A500FCBF78 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA94E6752D4E78A500FCBF78;
+			remoteInfo = ChessElo;
+		};
+		CA9B31E42D63CF34001CB0AD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA94E66E2D4E78A500FCBF78 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA9B31CF2D63CF32001CB0AD;
+			remoteInfo = ChessEloWidgetExtensionExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CA9B31E72D63CF34001CB0AD /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				CA7652122D6BBD3F003D7F54 /* ChessEloWidgetExtensionExtension.appex in Embed Foundation Extensions */,
+				CA9B31E62D63CF34001CB0AD /* ChessEloWidgetExtensionExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		CA7651FF2D6BBD3D003D7F54 /* ChessEloWidgetExtensionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ChessEloWidgetExtensionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA94E6762D4E78A500FCBF78 /* ChessElo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessElo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA94E6862D4E78A700FCBF78 /* ChessEloTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChessEloTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA94E6902D4E78A700FCBF78 /* ChessEloUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChessEloUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA9B31D02D63CF32001CB0AD /* ChessEloWidgetExtensionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ChessEloWidgetExtensionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA9B31D22D63CF32001CB0AD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		CA9B31D42D63CF32001CB0AD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		CA9B31ED2D63EDC8001CB0AD /* ChessEloWidgetExtensionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ChessEloWidgetExtensionExtension.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CA7652162D6BBD3F003D7F54 /* Exceptions for "ChessEloWidgetExtension" folder in "ChessEloWidgetExtensionExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CA7651FE2D6BBD3D003D7F54 /* ChessEloWidgetExtensionExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		CA7652022D6BBD3D003D7F54 /* ChessEloWidgetExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CA7652162D6BBD3F003D7F54 /* Exceptions for "ChessEloWidgetExtension" folder in "ChessEloWidgetExtensionExtension" target */,
+			);
+			path = ChessEloWidgetExtension;
+			sourceTree = "<group>";
+		};
+		CA94E6782D4E78A500FCBF78 /* ChessElo */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ChessElo;
+			sourceTree = "<group>";
+		};
+		CA94E6892D4E78A700FCBF78 /* ChessEloTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ChessEloTests;
+			sourceTree = "<group>";
+		};
+		CA94E6932D4E78A700FCBF78 /* ChessEloUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ChessEloUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CA7651FC2D6BBD3D003D7F54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA7652012D6BBD3D003D7F54 /* SwiftUI.framework in Frameworks */,
+				CA7652002D6BBD3D003D7F54 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA94E6732D4E78A500FCBF78 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CAE53FD32D4FDFE800A58C73 /* PostgREST in Frameworks */,
+				CAE53FD12D4FDFE800A58C73 /* Functions in Frameworks */,
+				CAE53FD92D4FDFE800A58C73 /* Supabase in Frameworks */,
+				CAE53FCF2D4FDFE800A58C73 /* Auth in Frameworks */,
+				CAE53FD72D4FDFE800A58C73 /* Storage in Frameworks */,
+				CAE53FD52D4FDFE800A58C73 /* Realtime in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA94E6832D4E78A700FCBF78 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA94E68D2D4E78A700FCBF78 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA9B31CD2D63CF32001CB0AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA9B31D52D63CF32001CB0AD /* SwiftUI.framework in Frameworks */,
+				CA9B31D32D63CF32001CB0AD /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CA94E66D2D4E78A500FCBF78 = {
+			isa = PBXGroup;
+			children = (
+				CA9B31ED2D63EDC8001CB0AD /* ChessEloWidgetExtensionExtension.entitlements */,
+				CA94E6782D4E78A500FCBF78 /* ChessElo */,
+				CA94E6892D4E78A700FCBF78 /* ChessEloTests */,
+				CA94E6932D4E78A700FCBF78 /* ChessEloUITests */,
+				CA7652022D6BBD3D003D7F54 /* ChessEloWidgetExtension */,
+				CA9B31D12D63CF32001CB0AD /* Frameworks */,
+				CA94E6772D4E78A500FCBF78 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CA94E6772D4E78A500FCBF78 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CA94E6762D4E78A500FCBF78 /* ChessElo.app */,
+				CA94E6862D4E78A700FCBF78 /* ChessEloTests.xctest */,
+				CA94E6902D4E78A700FCBF78 /* ChessEloUITests.xctest */,
+				CA9B31D02D63CF32001CB0AD /* ChessEloWidgetExtensionExtension.appex */,
+				CA7651FF2D6BBD3D003D7F54 /* ChessEloWidgetExtensionExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CA9B31D12D63CF32001CB0AD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CA9B31D22D63CF32001CB0AD /* WidgetKit.framework */,
+				CA9B31D42D63CF32001CB0AD /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CA7651FE2D6BBD3D003D7F54 /* ChessEloWidgetExtensionExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA7652132D6BBD3F003D7F54 /* Build configuration list for PBXNativeTarget "ChessEloWidgetExtensionExtension" */;
+			buildPhases = (
+				CA7651FB2D6BBD3D003D7F54 /* Sources */,
+				CA7651FC2D6BBD3D003D7F54 /* Frameworks */,
+				CA7651FD2D6BBD3D003D7F54 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				CA7652022D6BBD3D003D7F54 /* ChessEloWidgetExtension */,
+			);
+			name = ChessEloWidgetExtensionExtension;
+			packageProductDependencies = (
+			);
+			productName = ChessEloWidgetExtensionExtension;
+			productReference = CA7651FF2D6BBD3D003D7F54 /* ChessEloWidgetExtensionExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		CA94E6752D4E78A500FCBF78 /* ChessElo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA94E69A2D4E78A700FCBF78 /* Build configuration list for PBXNativeTarget "ChessElo" */;
+			buildPhases = (
+				CA94E6722D4E78A500FCBF78 /* Sources */,
+				CA94E6732D4E78A500FCBF78 /* Frameworks */,
+				CA94E6742D4E78A500FCBF78 /* Resources */,
+				CA9B31E72D63CF34001CB0AD /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CA9B31E52D63CF34001CB0AD /* PBXTargetDependency */,
+				CA7652112D6BBD3F003D7F54 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				CA94E6782D4E78A500FCBF78 /* ChessElo */,
+			);
+			name = ChessElo;
+			packageProductDependencies = (
+				CAE53FCE2D4FDFE800A58C73 /* Auth */,
+				CAE53FD02D4FDFE800A58C73 /* Functions */,
+				CAE53FD22D4FDFE800A58C73 /* PostgREST */,
+				CAE53FD42D4FDFE800A58C73 /* Realtime */,
+				CAE53FD62D4FDFE800A58C73 /* Storage */,
+				CAE53FD82D4FDFE800A58C73 /* Supabase */,
+			);
+			productName = ChessElo;
+			productReference = CA94E6762D4E78A500FCBF78 /* ChessElo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CA94E6852D4E78A700FCBF78 /* ChessEloTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA94E69D2D4E78A700FCBF78 /* Build configuration list for PBXNativeTarget "ChessEloTests" */;
+			buildPhases = (
+				CA94E6822D4E78A700FCBF78 /* Sources */,
+				CA94E6832D4E78A700FCBF78 /* Frameworks */,
+				CA94E6842D4E78A700FCBF78 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CA94E6882D4E78A700FCBF78 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				CA94E6892D4E78A700FCBF78 /* ChessEloTests */,
+			);
+			name = ChessEloTests;
+			packageProductDependencies = (
+			);
+			productName = ChessEloTests;
+			productReference = CA94E6862D4E78A700FCBF78 /* ChessEloTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CA94E68F2D4E78A700FCBF78 /* ChessEloUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA94E6A02D4E78A700FCBF78 /* Build configuration list for PBXNativeTarget "ChessEloUITests" */;
+			buildPhases = (
+				CA94E68C2D4E78A700FCBF78 /* Sources */,
+				CA94E68D2D4E78A700FCBF78 /* Frameworks */,
+				CA94E68E2D4E78A700FCBF78 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CA94E6922D4E78A700FCBF78 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				CA94E6932D4E78A700FCBF78 /* ChessEloUITests */,
+			);
+			name = ChessEloUITests;
+			packageProductDependencies = (
+			);
+			productName = ChessEloUITests;
+			productReference = CA94E6902D4E78A700FCBF78 /* ChessEloUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		CA9B31CF2D63CF32001CB0AD /* ChessEloWidgetExtensionExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA9B31EB2D63CF34001CB0AD /* Build configuration list for PBXNativeTarget "ChessEloWidgetExtensionExtension" */;
+			buildPhases = (
+				CA9B31CC2D63CF32001CB0AD /* Sources */,
+				CA9B31CD2D63CF32001CB0AD /* Frameworks */,
+				CA9B31CE2D63CF32001CB0AD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ChessEloWidgetExtensionExtension;
+			packageProductDependencies = (
+			);
+			productName = ChessEloWidgetExtensionExtension;
+			productReference = CA9B31D02D63CF32001CB0AD /* ChessEloWidgetExtensionExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CA94E66E2D4E78A500FCBF78 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					CA7651FE2D6BBD3D003D7F54 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					CA94E6752D4E78A500FCBF78 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					CA94E6852D4E78A700FCBF78 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = CA94E6752D4E78A500FCBF78;
+					};
+					CA94E68F2D4E78A700FCBF78 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = CA94E6752D4E78A500FCBF78;
+					};
+					CA9B31CF2D63CF32001CB0AD = {
+						CreatedOnToolsVersion = 16.2;
+					};
+				};
+			};
+			buildConfigurationList = CA94E6712D4E78A500FCBF78 /* Build configuration list for PBXProject "ChessElo" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CA94E66D2D4E78A500FCBF78;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				CAE53FCD2D4FC99800A58C73 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = CA94E6772D4E78A500FCBF78 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CA94E6752D4E78A500FCBF78 /* ChessElo */,
+				CA94E6852D4E78A700FCBF78 /* ChessEloTests */,
+				CA94E68F2D4E78A700FCBF78 /* ChessEloUITests */,
+				CA9B31CF2D63CF32001CB0AD /* ChessEloWidgetExtensionExtension */,
+				CA7651FE2D6BBD3D003D7F54 /* ChessEloWidgetExtensionExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CA7651FD2D6BBD3D003D7F54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA94E6742D4E78A500FCBF78 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA94E6842D4E78A700FCBF78 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA94E68E2D4E78A700FCBF78 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA9B31CE2D63CF32001CB0AD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CA7651FB2D6BBD3D003D7F54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA94E6722D4E78A500FCBF78 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA94E6822D4E78A700FCBF78 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA94E68C2D4E78A700FCBF78 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA9B31CC2D63CF32001CB0AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CA7652112D6BBD3F003D7F54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA7651FE2D6BBD3D003D7F54 /* ChessEloWidgetExtensionExtension */;
+			targetProxy = CA7652102D6BBD3F003D7F54 /* PBXContainerItemProxy */;
+		};
+		CA94E6882D4E78A700FCBF78 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA94E6752D4E78A500FCBF78 /* ChessElo */;
+			targetProxy = CA94E6872D4E78A700FCBF78 /* PBXContainerItemProxy */;
+		};
+		CA94E6922D4E78A700FCBF78 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA94E6752D4E78A500FCBF78 /* ChessElo */;
+			targetProxy = CA94E6912D4E78A700FCBF78 /* PBXContainerItemProxy */;
+		};
+		CA9B31E52D63CF34001CB0AD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA9B31CF2D63CF32001CB0AD /* ChessEloWidgetExtensionExtension */;
+			targetProxy = CA9B31E42D63CF34001CB0AD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		CA7652142D6BBD3F003D7F54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5YV4K95MU4;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ChessEloWidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ChessEloWidgetExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ReidApps.ChessElo.ChessEloWidgetExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CA7652152D6BBD3F003D7F54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5YV4K95MU4;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ChessEloWidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ChessEloWidgetExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ReidApps.ChessElo.ChessEloWidgetExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CA94E6982D4E78A700FCBF78 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CA94E6992D4E78A700FCBF78 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CA94E69B2D4E78A700FCBF78 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ChessElo/ChessElo.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ChessElo/Preview Content\"";
+				DEVELOPMENT_TEAM = 5YV4K95MU4;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ReidApps.ChessElo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CA94E69C2D4E78A700FCBF78 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ChessElo/ChessElo.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ChessElo/Preview Content\"";
+				DEVELOPMENT_TEAM = 5YV4K95MU4;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ReidApps.ChessElo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CA94E69E2D4E78A700FCBF78 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5YV4K95MU4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ReidApps.ChessEloTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChessElo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ChessElo";
+			};
+			name = Debug;
+		};
+		CA94E69F2D4E78A700FCBF78 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5YV4K95MU4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ReidApps.ChessEloTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChessElo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ChessElo";
+			};
+			name = Release;
+		};
+		CA94E6A12D4E78A700FCBF78 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5YV4K95MU4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ReidApps.ChessEloUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ChessElo;
+			};
+			name = Debug;
+		};
+		CA94E6A22D4E78A700FCBF78 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5YV4K95MU4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ReidApps.ChessEloUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ChessElo;
+			};
+			name = Release;
+		};
+		CA9B31E82D63CF34001CB0AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ChessEloWidgetExtensionExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5YV4K95MU4;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ChessEloWidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ChessEloWidgetExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ReidApps.ChessElo.ChessEloWidgetExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CA9B31E92D63CF34001CB0AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ChessEloWidgetExtensionExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5YV4K95MU4;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ChessEloWidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ChessEloWidgetExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ReidApps.ChessElo.ChessEloWidgetExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CA7652132D6BBD3F003D7F54 /* Build configuration list for PBXNativeTarget "ChessEloWidgetExtensionExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA7652142D6BBD3F003D7F54 /* Debug */,
+				CA7652152D6BBD3F003D7F54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA94E6712D4E78A500FCBF78 /* Build configuration list for PBXProject "ChessElo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA94E6982D4E78A700FCBF78 /* Debug */,
+				CA94E6992D4E78A700FCBF78 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA94E69A2D4E78A700FCBF78 /* Build configuration list for PBXNativeTarget "ChessElo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA94E69B2D4E78A700FCBF78 /* Debug */,
+				CA94E69C2D4E78A700FCBF78 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA94E69D2D4E78A700FCBF78 /* Build configuration list for PBXNativeTarget "ChessEloTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA94E69E2D4E78A700FCBF78 /* Debug */,
+				CA94E69F2D4E78A700FCBF78 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA94E6A02D4E78A700FCBF78 /* Build configuration list for PBXNativeTarget "ChessEloUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA94E6A12D4E78A700FCBF78 /* Debug */,
+				CA94E6A22D4E78A700FCBF78 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA9B31EB2D63CF34001CB0AD /* Build configuration list for PBXNativeTarget "ChessEloWidgetExtensionExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA9B31E82D63CF34001CB0AD /* Debug */,
+				CA9B31E92D63CF34001CB0AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CAE53FCD2D4FC99800A58C73 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CAE53FCE2D4FDFE800A58C73 /* Auth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAE53FCD2D4FC99800A58C73 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Auth;
+		};
+		CAE53FD02D4FDFE800A58C73 /* Functions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAE53FCD2D4FC99800A58C73 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Functions;
+		};
+		CAE53FD22D4FDFE800A58C73 /* PostgREST */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAE53FCD2D4FC99800A58C73 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = PostgREST;
+		};
+		CAE53FD42D4FDFE800A58C73 /* Realtime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAE53FCD2D4FC99800A58C73 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Realtime;
+		};
+		CAE53FD62D4FDFE800A58C73 /* Storage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAE53FCD2D4FC99800A58C73 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Storage;
+		};
+		CAE53FD82D4FDFE800A58C73 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAE53FCD2D4FC99800A58C73 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = CA94E66E2D4E78A500FCBF78 /* Project object */;
+}
