@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		CA7652002D6BBD3D003D7F54 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9B31D22D63CF32001CB0AD /* WidgetKit.framework */; };
 		CA7652012D6BBD3D003D7F54 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9B31D42D63CF32001CB0AD /* SwiftUI.framework */; };
-		CA7652122D6BBD3F003D7F54 /* ChessEloWidgetExtensionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CA7651FF2D6BBD3D003D7F54 /* ChessEloWidgetExtensionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CA9B31D32D63CF32001CB0AD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9B31D22D63CF32001CB0AD /* WidgetKit.framework */; };
 		CA9B31D52D63CF32001CB0AD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9B31D42D63CF32001CB0AD /* SwiftUI.framework */; };
 		CA9B31E62D63CF34001CB0AD /* ChessEloWidgetExtensionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CA9B31D02D63CF32001CB0AD /* ChessEloWidgetExtensionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -22,13 +21,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		CA7652102D6BBD3F003D7F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CA94E66E2D4E78A500FCBF78 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CA7651FE2D6BBD3D003D7F54;
-			remoteInfo = ChessEloWidgetExtensionExtension;
-		};
 		CA94E6872D4E78A700FCBF78 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CA94E66E2D4E78A500FCBF78 /* Project object */;
@@ -43,13 +35,6 @@
 			remoteGlobalIDString = CA94E6752D4E78A500FCBF78;
 			remoteInfo = ChessElo;
 		};
-		CA9B31E42D63CF34001CB0AD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CA94E66E2D4E78A500FCBF78 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CA9B31CF2D63CF32001CB0AD;
-			remoteInfo = ChessEloWidgetExtensionExtension;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -59,7 +44,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				CA7652122D6BBD3F003D7F54 /* ChessEloWidgetExtensionExtension.appex in Embed Foundation Extensions */,
 				CA9B31E62D63CF34001CB0AD /* ChessEloWidgetExtensionExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -79,6 +63,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CA5B293C2D790AFB00231FCF /* Exceptions for "ChessElo" folder in "ChessElo" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Preview Content/Preview Assets.xcassets",
+			);
+			target = CA94E6752D4E78A500FCBF78 /* ChessElo */;
+		};
 		CA7652162D6BBD3F003D7F54 /* Exceptions for "ChessEloWidgetExtension" folder in "ChessEloWidgetExtensionExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -99,6 +90,9 @@
 		};
 		CA94E6782D4E78A500FCBF78 /* ChessElo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CA5B293C2D790AFB00231FCF /* Exceptions for "ChessElo" folder in "ChessElo" target */,
+			);
 			path = ChessElo;
 			sourceTree = "<group>";
 		};
@@ -234,8 +228,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				CA9B31E52D63CF34001CB0AD /* PBXTargetDependency */,
-				CA7652112D6BBD3F003D7F54 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				CA94E6782D4E78A500FCBF78 /* ChessElo */,
@@ -450,11 +442,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		CA7652112D6BBD3F003D7F54 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CA7651FE2D6BBD3D003D7F54 /* ChessEloWidgetExtensionExtension */;
-			targetProxy = CA7652102D6BBD3F003D7F54 /* PBXContainerItemProxy */;
-		};
 		CA94E6882D4E78A700FCBF78 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CA94E6752D4E78A500FCBF78 /* ChessElo */;
@@ -464,11 +451,6 @@
 			isa = PBXTargetDependency;
 			target = CA94E6752D4E78A500FCBF78 /* ChessElo */;
 			targetProxy = CA94E6912D4E78A700FCBF78 /* PBXContainerItemProxy */;
-		};
-		CA9B31E52D63CF34001CB0AD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CA9B31CF2D63CF32001CB0AD /* ChessEloWidgetExtensionExtension */;
-			targetProxy = CA9B31E42D63CF34001CB0AD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -485,7 +467,7 @@
 				INFOPLIST_FILE = ChessEloWidgetExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ChessEloWidgetExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -513,7 +495,7 @@
 				INFOPLIST_FILE = ChessEloWidgetExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ChessEloWidgetExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -581,7 +563,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -638,7 +620,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -665,7 +647,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -696,7 +678,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -718,7 +700,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5YV4K95MU4;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ReidApps.ChessEloTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -737,7 +719,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5YV4K95MU4;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ReidApps.ChessEloTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -755,7 +737,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5YV4K95MU4;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ReidApps.ChessEloUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -773,7 +755,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5YV4K95MU4;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ReidApps.ChessEloUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -797,7 +779,7 @@
 				INFOPLIST_FILE = ChessEloWidgetExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ChessEloWidgetExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -826,7 +808,7 @@
 				INFOPLIST_FILE = ChessEloWidgetExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ChessEloWidgetExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
