@@ -39,7 +39,7 @@ public struct QuestionOne: View {
                         .font(.system(size: 32, weight: .bold, design: .rounded))
                         .foregroundColor(.white)
                     
-                    Text("Which area of your chess game would you most like to improve?")
+                    Text("Which part of your chess game would you most like to improve?")
                         .font(.body)
                         .foregroundColor(.white.opacity(0.85))
                         .multilineTextAlignment(.center)

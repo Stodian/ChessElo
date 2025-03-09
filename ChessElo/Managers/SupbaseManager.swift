@@ -13,7 +13,7 @@ class SupabaseManager: ObservableObject {
     private init() {
         self.supabase = SupabaseClient(
             supabaseURL: URL(string: "https://nhqtwporuislmpomksyk.supabase.co")!,
-            supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ocXR3cG9ydWlzbG1wb21rc3lrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg0MzUwNjgsImV4cCI6MjA1NDAxMTA2OH0.7pMw-fRa0sbFlybN57c9NUtpK9WZhBS-Bh9kqtFQUQE"
+            supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ocXR3cG9ydWlzbG1wb21rc3lrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTAwMTA4MjcsImV4cCI6MjAyNTU4NjgyN30.0URwwRcvk9v9WZOI8Us0xJ-B5unyl2uQJRr8LqQU_Sg"
         )
 
         Task {
@@ -24,16 +24,21 @@ class SupabaseManager: ObservableObject {
     // MARK: - 🔹 Restore Session on App Launch
     func restoreSession() async {
         do {
-            if let session = try? await supabase.auth.session {
-                print("✅ Active session restored: \(session)")
-                isAuthenticated = true
-            } else {
-                print("❌ No existing session found")
-                isAuthenticated = false
+            let session = try await supabase.auth.session
+            print("✅ Active session restored: \(session)")
+
+            await MainActor.run {
+                self.isAuthenticated = true
             }
+
+            // 🔹 Fetch Chess.com username after restoring session
+            await fetchChessUsername()
+
         } catch {
-            print("❌ Failed to restore session: \(error)")
-            isAuthenticated = false
+            print("❌ Failed to restore session: \(error.localizedDescription)")
+            await MainActor.run {
+                self.isAuthenticated = false
+            }
         }
     }
 
@@ -42,14 +47,15 @@ class SupabaseManager: ObservableObject {
         do {
             // ✅ Ensure there is an authenticated user
             let session = try await supabase.auth.session
-            let user = session.user // ✅ No optional chaining needed
+            let user = session.user
 
             print("🔍 Fetching Chess.com username for user ID: \(user.id)")
 
+            // ✅ Corrected `.execute()` call to return actual data
             let response = try await supabase
                 .from("users")
-                .select("chess_username") // ✅ FIXED: Removed invalid label
-                .eq("id", value: user.id) // ✅ FIXED: Removed invalid label
+                .select("chess_username")
+                .eq("id", value: user.id)
                 .single()
                 .execute()
 
@@ -62,34 +68,32 @@ class SupabaseManager: ObservableObject {
             } else {
                 print("❌ Chess.com username not found in Supabase")
             }
+
         } catch {
-            print("❌ Error fetching Chess.com username from Supabase: \(error)")
+            print("❌ Error fetching Chess.com username: \(error.localizedDescription)")
         }
     }
-    
-    
 
     // MARK: - 🔹 User Sign In
     func signIn(email: String, password: String) async -> Bool {
         do {
             let session = try await supabase.auth.signIn(email: email, password: password)
             print("✅ User signed in successfully: \(session)")
-            
+
             await MainActor.run {
                 self.isAuthenticated = true
             }
+
             await fetchChessUsername() // ✅ Fetch username after login
             return true
         } catch {
-            print("❌ Error signing in: \(error)")
+            print("❌ Error signing in: \(error.localizedDescription)")
             await MainActor.run {
                 self.isAuthenticated = false
             }
             return false
         }
     }
-    
-    
 
     // MARK: - 🔹 User Sign Up
     func signUp(email: String, password: String, chessUsername: String) async -> Bool {
@@ -108,22 +112,20 @@ class SupabaseManager: ObservableObject {
                 .execute()
 
             print("✅ User signed up & chess username saved")
-            
+
             await MainActor.run {
                 self.isAuthenticated = true
                 self.chessUsername = chessUsername
             }
             return true
         } catch {
-            print("❌ Error signing up: \(error)")
+            print("❌ Error signing up: \(error.localizedDescription)")
             await MainActor.run {
                 self.isAuthenticated = false
             }
             return false
         }
     }
-    
-    
 
     // MARK: - 🔹 Sign Out
     func signOut() async {
@@ -135,7 +137,8 @@ class SupabaseManager: ObservableObject {
                 self.chessUsername = ""
             }
         } catch {
-            print("❌ Error signing out: \(error)")
+            print("❌ Error signing out: \(error.localizedDescription)")
         }
     }
 }
+

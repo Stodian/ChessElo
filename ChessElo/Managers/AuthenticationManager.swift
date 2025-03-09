@@ -10,30 +10,72 @@ class AuthenticationManager: ObservableObject {
     private let userManager = UserManager.shared
     private let supabaseManager = SupabaseManager.shared  // ✅ Use shared Supabase instance
 
+    init() {
+        // Initialize by attempting to restore session
+        Task {
+            await restoreSession()
+        }
+    }
+
     // ✅ Restore session on launch
     func restoreSession() async {
         do {
-            let session = try? await supabaseManager.supabase.auth.session
+            let session = try await supabaseManager.supabase.auth.session // ✅ Fetch session
+            
+            print("✅ Session restored successfully: \(session)")
+            
+            // Update authentication state
             await MainActor.run {
-                self.isAuthenticated = (session != nil)
+                self.isAuthenticated = true
             }
-            print(session != nil ? "✅ Session restored" : "❌ No session found")
+            
+            // Fetch user information
+            await fetchUserInfo(userId: session.user.id.uuidString)
         } catch {
             print("❌ Error restoring session:", error.localizedDescription)
+
             await MainActor.run {
                 self.isAuthenticated = false
+                self.userName = ""
+                self.chessUsername = ""
             }
         }
     }
     
+    // New method to fetch user info after session restoration
+    private func fetchUserInfo(userId: String) async {
+        do {
+            let response = try await supabaseManager.supabase
+                .from("users")
+                .select("email, chess_username")
+                .eq("id", value: userId)
+                .single()
+                .execute()
+            
+            if let data = response.data as? [String: Any],
+               let email = data["email"] as? String,
+               let chessUsername = data["chess_username"] as? String {
+                
+                await MainActor.run {
+                    self.userName = email
+                    self.chessUsername = chessUsername
+                }
+                
+                print("✅ User info retrieved: \(email), \(chessUsername)")
+            }
+        } catch {
+            print("❌ Error fetching user info: \(error.localizedDescription)")
+        }
+    }
     
     // ✅ Mark onboarding as complete
     func completeOnboarding() {
         UserDefaults.standard.set(true, forKey: "onboardingCompleted")
-        self.isOnboardingComplete = true
+        
+        DispatchQueue.main.async { // ✅ Ensure UI updates on main thread
+            self.isOnboardingComplete = true
+        }
     }
-    
-    
     
     func signUp(email: String, password: String, chessUsername: String) async {
         do {
@@ -52,7 +94,6 @@ class AuthenticationManager: ObservableObject {
             print("Login error:", error.localizedDescription)
         }
     }
-
     
     // 🔥 Fix: `logout()` now properly logs out from Supabase
     func logout() async {
@@ -64,8 +105,6 @@ class AuthenticationManager: ObservableObject {
         }
     }
     
-    
-
     func updateUsername(_ newUsername: String) {
         do {
             try userManager.updateChessUsername(newUsername)
