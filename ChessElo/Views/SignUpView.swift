@@ -1,101 +1,106 @@
 import SwiftUI
 
 struct SignUpView: View {
+    @EnvironmentObject var authManager: AuthenticationManager
+    @Environment(\.dismiss) private var dismiss
+
     @State private var email = ""
     @State private var password = ""
     @State private var chessUsername = ""
+
     @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var showError = false
-    @Environment(\.dismiss) var dismiss
-    
+
+    @State private var successMessage: String = ""
+    @State private var showSuccess = false
+
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section(header: Text("Account Details")) {
                     TextField("Email", text: $email)
                         .textContentType(.emailAddress)
-                        .autocapitalization(.none)
-                    
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled(true)
+                        .keyboardType(.emailAddress)
+
                     SecureField("Password", text: $password)
                         .textContentType(.newPassword)
                 }
-                
+
                 Section(header: Text("Chess.com Details")) {
                     TextField("Chess.com Username", text: $chessUsername)
-                        .autocapitalization(.none)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled(true)
                 }
-                
-                Button(action: {
-                    isLoading = true
-                    Task {
-                        await signUp()
-                    }
-                }) {
+
+                Button {
+                    Task { await signUp() }
+                } label: {
                     HStack {
-                        if isLoading {
-                            ProgressView()
-                                .tint(.white)
-                        }
-                        Text("Sign Up")
+                        if isLoading { ProgressView() }
+                        Text(isLoading ? "Signing Up..." : "Sign Up")
                     }
                 }
                 .disabled(isLoading || !isValidInput)
             }
             .navigationTitle("Create Account")
         }
-        .alert("Error", isPresented: $showError, actions: {
+        .alert("Error", isPresented: $showError) {
             Button("OK", role: .cancel) { }
-        }, message: {
+        } message: {
             Text(errorMessage ?? "An unknown error occurred")
-        })
+        }
+        .alert("Check your email", isPresented: $showSuccess) {
+            Button("OK") { dismiss() }
+        } message: {
+            Text(successMessage)
+        }
     }
-    
+
     private var isValidInput: Bool {
-        !email.isEmpty && !password.isEmpty && !chessUsername.isEmpty
+        !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        !password.isEmpty &&
+        !chessUsername.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
-    
+
     private func signUp() async {
-        do {
-            // ✅ Step 1: Attempt Sign-Up
-            let result = try await SupabaseManager.shared.supabase.auth.signUp(
-                email: email,
-                password: password
-            )
-            
-            // ✅ Step 2: Get user ID and ensure it's a String
-            let userId = result.user.id.uuidString
-            print("✅ Successfully signed up with ID: \(userId)")
-            
-            // ✅ Step 3: Insert user into Supabase database
-            try await SupabaseManager.shared.supabase
-                .from("users")
-                .insert([
-                    "id": userId, // UUID converted to String
-                    "email": email,
-                    "chess_username": chessUsername
-                ])
-                .execute()
-            
-            print("✅ User data inserted into Supabase.")
-            
-            await MainActor.run {
-                isLoading = false
-                dismiss() // ✅ Close the sign-up screen after success
-            }
-            
-        } catch {
-            print("❌ Error during sign-up: \(error)")
-            await MainActor.run {
-                isLoading = false
-                errorMessage = error.localizedDescription
+        await MainActor.run {
+            isLoading = true
+            errorMessage = nil
+            showError = false
+        }
+
+        let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedChess = chessUsername.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        let result = await authManager.signUp(
+            email: trimmedEmail,
+            password: password,
+            chessUsername: trimmedChess
+        )
+
+        await MainActor.run {
+            isLoading = false
+            if result.ok {
+                switch result.outcome {
+                case .emailConfirmationSent:
+                    successMessage = "We’ve sent a confirmation link to \(trimmedEmail). Verify it, then come back and sign in."
+                    showSuccess = true
+
+                case .signedIn:
+                    // user is already signed in, dismiss immediately
+                    dismiss()
+
+                case .none:
+                    successMessage = "Account created."
+                    showSuccess = true
+                }
+            } else {
+                errorMessage = "Sign up failed. Check details and try again."
                 showError = true
             }
         }
     }
-}
-
-// ✅ Fixed #Preview - No Circular Reference
-#Preview {
-    SignUpView()
 }

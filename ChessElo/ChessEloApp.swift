@@ -1,3 +1,4 @@
+// ChessEloApp.swift
 import SwiftUI
 
 @main
@@ -8,6 +9,21 @@ struct ChessEloApp: App {
         WindowGroup {
             RootView()
                 .environmentObject(authManager)
+                // ✅ Handle Supabase email-confirm deep links like:
+                // chesselo://auth-callback#access_token=...
+                .onOpenURL { url in
+                    Task {
+                        do {
+                            // ✅ NEW Supabase Swift: handle incoming auth callback URL
+                            try await SupabaseManager.shared.supabase.auth.handle(url)
+
+                            // ✅ Refresh app state after the session is stored
+                            await authManager.restoreSession()
+                        } catch {
+                            print("❌ auth.handle(url:) failed:", String(reflecting: error))
+                        }
+                    }
+                }
         }
     }
 }
@@ -16,95 +32,67 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject var authManager: AuthenticationManager
+
     @State private var isShowingWelcome = true
-    @State private var isShowingLogin = false
     @State private var onboardingCompleted: Bool = UserDefaults.standard.bool(forKey: "onboardingCompleted")
-    
-    // For debugging
+
+    // Optional debug overlay
     @State private var navigationState: String = "Initial"
 
     var body: some View {
         ZStack {
-            if isShowingWelcome {
-                // Show welcome screen
-                WelcomeScreen()
-                    .transition(.opacity)
-                    .onAppear {
-                        print("📱 Showing Welcome Screen")
-                        navigationState = "Welcome Screen"
-                        
-                        // Set a timer to transition after 3 seconds
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                            print("📱 Welcome screen timeout - transitioning...")
-                            navigationState = "After Welcome"
-                            
-                            withAnimation(.easeInOut(duration: 0.5)) {
-                                isShowingWelcome = false
-                            }
-                        }
-                    }
-            } else if !onboardingCompleted {
-                // Show onboarding flow if not completed
-                OnboardingFlowView(onCompletion: {
-                    print("📱 Onboarding completed")
-                    navigationState = "After Onboarding"
-                    
-                    onboardingCompleted = true
-                    UserDefaults.standard.set(true, forKey: "onboardingCompleted")
-                    
-                    withAnimation(.easeInOut) {
-                        isShowingLogin = !authManager.isAuthenticated
-                    }
-                })
+
+            // ✅ 1) Always wait for restore to finish first (prevents flicker)
+            if authManager.isRestoring {
+                VStack(spacing: 12) {
+                    ProgressView()
+                    Text("Checking session...")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                .onAppear { navigationState = "Restoring Session" }
+            }
+
+            // ✅ 2) If authenticated, skip Welcome entirely
+            else if authManager.isAuthenticated {
+                NavigationStack {
+                    ChessStatsView()
+                }
                 .transition(.opacity)
-            } else if !authManager.isAuthenticated {
-                // Show login if not authenticated
-                LoginView()
-                    .transition(.opacity)
-                    .onAppear {
-                        print("📱 Showing Login Screen")
-                        navigationState = "Login Screen"
-                    }
-            } else {
-                // Show main app view if authenticated
-                ChessStatsView()
-                    .transition(.opacity)
-                    .onAppear {
-                        print("📱 Showing Stats Screen")
-                        navigationState = "Stats Screen"
-                    }
+                .onAppear { navigationState = "Stats Screen" }
             }
-            
-            // Optional debug overlay - comment out for production
-            VStack {
-                Spacer()
-                Text("State: \(navigationState)")
-                    .font(.caption)
-                    .padding(5)
-                    .background(Color.black.opacity(0.7))
-                    .foregroundColor(.white)
-                    .cornerRadius(5)
-            }
-            .padding()
-        }
-        .onAppear {
-            // Initialize authentication state when the RootView appears
-            Task {
-                print("📱 RootView appeared - checking session")
-                await authManager.restoreSession()
-                
-                // Wait for session restoration to complete before updating UI
-                await MainActor.run {
-                    print("📱 Session check complete - auth state: \(authManager.isAuthenticated)")
-                    
-                    // If already showing welcome, don't change states yet
-                    if !isShowingWelcome {
-                        if onboardingCompleted {
-                            isShowingLogin = !authManager.isAuthenticated
-                        }
+
+            // ✅ 3) Not authenticated: show Welcome once, then proceed
+            else if isShowingWelcome {
+                WelcomeScreen {
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        isShowingWelcome = false
                     }
                 }
+                .transition(.opacity)
+                .onAppear { navigationState = "Welcome Screen" }
             }
+
+            // ✅ 4) After Welcome: onboarding then login
+            else if !onboardingCompleted {
+                OnboardingFlowView(onCompletion: {
+                    navigationState = "After Onboarding"
+                    onboardingCompleted = true
+                    UserDefaults.standard.set(true, forKey: "onboardingCompleted")
+                })
+                .transition(.opacity)
+            }
+
+            else {
+                LoginView()
+                    .transition(.opacity)
+                    .onAppear { navigationState = "Login Screen" }
+            }
+
+        }
+        // ✅ Ensure Welcome doesn't "stick" if auth becomes true later (e.g. deep link / restore)
+        .onChange(of: authManager.isAuthenticated) { authed in
+            if authed { isShowingWelcome = false }
         }
     }
 }

@@ -1,7 +1,9 @@
 import WidgetKit
 import SwiftUI
+import Foundation
 
-// Entry model for widget
+// MARK: - Entry
+
 struct ChessStatsEntry: TimelineEntry {
     let date: Date
     let blitzRating: Int
@@ -10,178 +12,213 @@ struct ChessStatsEntry: TimelineEntry {
     let globalRank: Int
 }
 
-
+// MARK: - iOS 17 containerBackground fallback
 
 struct ContainerBackgroundIfAvailable: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 17.0, *) {
-            content.containerBackground(.fill.tertiary, for: .widget) // ✅ iOS 17+
+            content.containerBackground(.fill.tertiary, for: .widget)
         } else {
-            content // ✅ iOS 16 and earlier
+            content
         }
     }
 }
 
+// MARK: - SharedDefaults (App Group-safe)
 
+enum SharedDefaults {
+    static let groupID = "group.com.stodian.chesselo"
 
-// Timeline Provider
+    /// If this is nil, this process does NOT have a usable App Group container.
+    static var containerURL: URL? {
+        FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupID)
+    }
+
+    /// Only create suite-backed defaults when the container exists.
+    static var shared: UserDefaults? {
+        guard containerURL != nil else { return nil }
+        return UserDefaults(suiteName: groupID)
+    }
+}
+
+// MARK: - Provider
+
 struct Provider: TimelineProvider {
+
     func placeholder(in context: Context) -> ChessStatsEntry {
-        ChessStatsEntry(date: Date(), blitzRating: 1500, bulletRating: 1600, rapidRating: 1700, globalRank: 1200)
+        ChessStatsEntry(
+            date: Date(),
+            blitzRating: 1500,
+            bulletRating: 1600,
+            rapidRating: 1700,
+            globalRank: 1200
+        )
     }
 
     func getSnapshot(in context: Context, completion: @escaping (ChessStatsEntry) -> Void) {
-        let sharedDefaults = UserDefaults(suiteName: "group.com.yourapp.chessstats")
-
-        let blitzRating = sharedDefaults?.integer(forKey: "blitzRating") ?? 1500
-        let bulletRating = sharedDefaults?.integer(forKey: "bulletRating") ?? 1600
-        let rapidRating = sharedDefaults?.integer(forKey: "rapidRating") ?? 1700
-
-        let entry = ChessStatsEntry(date: Date(), blitzRating: blitzRating, bulletRating: bulletRating, rapidRating: rapidRating, globalRank: 1200)
-        completion(entry)
+        completion(makeEntry())
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<ChessStatsEntry>) -> Void) {
-        let sharedDefaults = UserDefaults(suiteName: "group.com.yourapp.chessstats")
-
-        let blitzRating = sharedDefaults?.integer(forKey: "blitzRating") ?? 1500
-        let bulletRating = sharedDefaults?.integer(forKey: "bulletRating") ?? 1600
-        let rapidRating = sharedDefaults?.integer(forKey: "rapidRating") ?? 1700
-
-        let currentDate = Date()
-        let refreshDate = Calendar.current.date(byAdding: .minute, value: 15, to: currentDate)!
-
-        let entry = ChessStatsEntry(
-            date: currentDate,
-            blitzRating: blitzRating,
-            bulletRating: bulletRating,
-            rapidRating: rapidRating,
-            globalRank: 1200
-        )
-
-        let timeline = Timeline(entries: [entry], policy: .after(refreshDate))
-        completion(timeline)
+        let entry = makeEntry()
+        let now = Date()
+        let refresh = Calendar.current.date(byAdding: .minute, value: 15, to: now) ?? now.addingTimeInterval(900)
+        completion(Timeline(entries: [entry], policy: .after(refresh)))
     }
-}
 
+    private func makeEntry() -> ChessStatsEntry {
+        // ✅ Only touch app-group defaults if the container exists.
+        if let sharedDefaults = SharedDefaults.shared {
+            let blitz = sharedDefaults.integer(forKey: "blitzRating")
+            let bullet = sharedDefaults.integer(forKey: "bulletRating")
+            let rapid = sharedDefaults.integer(forKey: "rapidRating")
 
-
-// Main Widget View
-struct ChessEloWidgetEntryView: View {
-    var entry: ChessStatsEntry
-
-    var body: some View {
-        GeometryReader { geometry in
-            VStack(alignment: .leading, spacing: 1) {
-                Text("Ratings")
-                    .font(.system(size: 7, weight: .bold, design: .rounded))
-                    .foregroundColor(.white.opacity(0))
-
-                Divider()
-                    .background(Color.white.opacity(0))
-
-                VStack(alignment: .leading, spacing: 2) {
-                    RatingRow(icon: "♟️", title: "Blitz", rating: entry.blitzRating)
-                    RatingRow(icon: "⚡", title: "Bullet", rating: entry.bulletRating)
-                    RatingRow(icon: "⏳", title: "Rapid", rating: entry.rapidRating)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 5)
-                .lineLimit(1)
-
-                Spacer()
-            }
-            .padding(.leading, 20)
-            .padding(.bottom, 2)
-            .frame(width: geometry.size.width, height: geometry.size.height)
-            .background(
-                Color.black.opacity(0))
-            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.white.opacity(0)))
-            .shadow(color: Color.black.opacity(0), radius: 10, x: 0, y: 5)
-            .containerBackground(.fill, for: .widget)
+            return ChessStatsEntry(
+                date: Date(),
+                blitzRating: blitz,
+                bulletRating: bullet,
+                rapidRating: rapid,
+                globalRank: 1200
+            )
+        } else {
+            // In previews / misconfigured entitlement contexts, do NOT access suite defaults.
+            return ChessStatsEntry(
+                date: Date(),
+                blitzRating: 0,
+                bulletRating: 0,
+                rapidRating: 0,
+                globalRank: 1200
+            )
         }
     }
 }
 
+// MARK: - Entry View
 
+struct ChessEloWidgetEntryView: View {
+    var entry: ChessStatsEntry
+    @Environment(\.widgetFamily) private var family
+
+    var body: some View {
+        switch family {
+        case .accessoryRectangular:
+            ChessEloLockScreenView(entry: entry)
+        case .systemSmall:
+            ChessEloSystemSmallView(entry: entry)
+        case .systemMedium:
+            ChessEloSystemMediumView(entry: entry)
+        default:
+            EmptyView()
+        }
+    }
+}
+
+// MARK: - Widget
 
 @main
 struct ChessEloWidgetExtension: Widget {
-    let kind: String = "ChessEloWidget"
+    private let kind: String = "ChessEloWidget"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             ChessEloWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Chess Elo Widget")
-        .description("Displays your latest Chess Elo rating.")
-        .supportedFamilies([
-            .accessoryRectangular,
-        ])
+        .description("Displays your latest Chess Elo ratings.")
+        .supportedFamilies([.accessoryRectangular, .systemSmall, .systemMedium])
     }
 }
 
-
-
-// Rating Row Component
-struct RatingRow: View {
-    let icon: String
-    let title: String
-    let rating: Int
-
-    var body: some View {
-        HStack {
-            Text("\(icon) \(title): \(rating)")
-                .font(.system(size: 14, weight: .medium, design: .rounded))
-                .foregroundColor(.white.opacity(0.8))
-            Spacer()
-        }
-    }
-}
-
-
-
-// VisualEffectBlur Component for Background
-struct VisualEffectBlur: UIViewRepresentable {
-    var blurStyle: UIBlurEffect.Style
-
-    func makeUIView(context: Context) -> UIVisualEffectView {
-        let view = UIVisualEffectView(effect: UIBlurEffect(style: blurStyle))
-        return view
-    }
-
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {}
-}
-
-
+// MARK: - Views
 
 struct ChessEloLockScreenView: View {
     var entry: ChessStatsEntry
 
     var body: some View {
-        HStack(spacing: 0) {
-            VStack(alignment: .leading, spacing: 0) {
-                Text("Blitz: \(entry.blitzRating)")
-                Text("Bullet: \(entry.bulletRating)")
-                Text("Rapid: \(entry.rapidRating)")
-            }
-            .font(.system(size: 8, weight: .regular, design: .rounded))
-            .foregroundColor(.white.opacity(0.85))
-            .lineLimit(1)
-            .frame(height: 2)
-            .scaledToFit()
+        VStack(alignment: .leading, spacing: 2) {
+            Text("♟️ Blitz \(entry.blitzRating)")
+            Text("⚡ Bullet \(entry.bulletRating)")
+            Text("⏳ Rapid \(entry.rapidRating)")
         }
-        .containerBackground(.fill.tertiary, for: .widget)
+        .font(.caption2)
+        .lineLimit(1)
+        .modifier(ContainerBackgroundIfAvailable())
     }
 }
 
+struct ChessEloSystemSmallView: View {
+    var entry: ChessStatsEntry
 
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("Chess Elo")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
 
-#Preview(as: .accessoryRectangular) {
-    ChessEloWidgetExtension()
-} timeline: {
-    ChessStatsEntry(date: Date(), blitzRating: 1500, bulletRating: 1600, rapidRating: 1700, globalRank: 1200)
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    smallRow("Blitz", entry.blitzRating)
+                    smallRow("Bullet", entry.bulletRating)
+                    smallRow("Rapid", entry.rapidRating)
+                }
+                Spacer()
+            }
+        }
+        .padding(12)
+        .modifier(ContainerBackgroundIfAvailable())
+    }
+
+    private func smallRow(_ label: String, _ value: Int) -> some View {
+        HStack {
+            Text(label).foregroundStyle(.secondary)
+            Spacer()
+            Text("\(value)").fontWeight(.semibold).monospacedDigit()
+        }
+        .font(.caption2)
+    }
 }
 
+struct ChessEloSystemMediumView: View {
+    var entry: ChessStatsEntry
 
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Chess Elo")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.secondary)
+
+                mediumRow("Blitz", entry.blitzRating)
+                mediumRow("Bullet", entry.bulletRating)
+                mediumRow("Rapid", entry.rapidRating)
+            }
+            Spacer()
+        }
+        .padding(14)
+        .modifier(ContainerBackgroundIfAvailable())
+    }
+
+    private func mediumRow(_ label: String, _ value: Int) -> some View {
+        HStack {
+            Text(label).foregroundStyle(.secondary)
+            Spacer()
+            Text("\(value)").fontWeight(.semibold).monospacedDigit()
+        }
+        .font(.caption)
+    }
+}
+
+// MARK: - Preview
+
+struct ChessEloWidget_Previews: PreviewProvider {
+    static var previews: some View {
+        ChessEloWidgetEntryView(entry: ChessStatsEntry(
+            date: Date(),
+            blitzRating: 1500,
+            bulletRating: 1600,
+            rapidRating: 1700,
+            globalRank: 1200
+        ))
+        .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
+    }
+}

@@ -2,35 +2,24 @@ import SwiftUI
 
 struct LoginView: View {
     @EnvironmentObject private var authManager: AuthenticationManager
+
     @State private var email = ""
     @State private var password = ""
+
     @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var showError = false
     @State private var showingSignUp = false
 
     var body: some View {
-        NavigationStack {
-            if authManager.isAuthenticated {
-                ChessStatsView()  // ✅ Automatically navigates if user is logged in
-            } else {
-                loginContent
-                    .navigationBarBackButtonHidden(true)
-            }
-        }
-    }
-    
-    private var loginContent: some View {
         ZStack {
-            ChessboardBackground()
-                .ignoresSafeArea()
-            Color.black.opacity(0.7)
-                .ignoresSafeArea()
+            ChessboardBackground().ignoresSafeArea()
+            Color.black.opacity(0.7).ignoresSafeArea()
 
             VStack(spacing: 32) {
                 Spacer().frame(height: 100)
+                    .padding(.top, -50)
 
-                // App Title & Icon
                 VStack(spacing: 16) {
                     Image(systemName: "bolt.fill")
                         .font(.system(size: 48))
@@ -41,7 +30,6 @@ struct LoginView: View {
                         .foregroundColor(.white)
                 }
 
-                // Input Fields
                 VStack(spacing: 20) {
                     TextField("", text: $email)
                         .textFieldStyle(.plain)
@@ -50,10 +38,7 @@ struct LoginView: View {
                         .keyboardType(.emailAddress)
                         .textContentType(.emailAddress)
                         .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.white.opacity(0.1))
-                        )
+                        .background(RoundedRectangle(cornerRadius: 12).fill(Color.white.opacity(0.1)))
                         .foregroundColor(.white)
                         .placeholder(when: email.isEmpty) {
                             Text("Email")
@@ -65,11 +50,9 @@ struct LoginView: View {
                         .textFieldStyle(.plain)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
+                        .textContentType(.password)
                         .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.white.opacity(0.1))
-                        )
+                        .background(RoundedRectangle(cornerRadius: 12).fill(Color.white.opacity(0.1)))
                         .foregroundColor(.white)
                         .placeholder(when: password.isEmpty) {
                             Text("Password")
@@ -79,14 +62,9 @@ struct LoginView: View {
                 }
                 .padding(.horizontal)
 
-                // Login Button
-                Button(action: {
-                    isLoading = true
-                    errorMessage = nil
-                    Task {
-                        await login()
-                    }
-                }) {
+                Button {
+                    Task { await login() }
+                } label: {
                     ZStack {
                         Text("Sign In")
                             .font(.headline)
@@ -112,7 +90,6 @@ struct LoginView: View {
                 .opacity(!isValidInput ? 0.6 : 1)
                 .padding(.horizontal)
 
-                // Sign Up Prompt
                 HStack {
                     Text("Don't have an account?")
                         .foregroundColor(.gray)
@@ -120,47 +97,47 @@ struct LoginView: View {
                         .foregroundColor(.Maroon)
                 }
                 .font(.subheadline)
-                .sheet(isPresented: $showingSignUp) { SignUpView() }
+                .sheet(isPresented: $showingSignUp) {
+                    SignUpView()
+                        .environmentObject(authManager)
+                }
 
                 Spacer()
             }
         }
-        .alert("Error", isPresented: $showError, actions: {
+        .alert("Error", isPresented: $showError) {
             Button("OK", role: .cancel) { }
-        }, message: {
+        } message: {
             Text(errorMessage ?? "An unknown error occurred")
-        })
+        }
     }
-    
+
     private var isValidInput: Bool {
-        !email.isEmpty && !password.isEmpty
+        !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !password.isEmpty
     }
-    
+
     private func login() async {
-        do {
-            _ = try await SupabaseManager.shared.supabase.auth.signIn(
-                email: email,
-                password: password
-            )
-            
-            await MainActor.run {
-                authManager.isAuthenticated = true // ✅ Ensures persistent login
-                isLoading = false
-            }
-        } catch {
-            await MainActor.run {
-                isLoading = false
-                errorMessage = error.localizedDescription
+        await MainActor.run {
+            isLoading = true
+            errorMessage = nil
+            showError = false
+        }
+
+        let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        let ok = await authManager.signIn(email: trimmedEmail, password: password)
+
+        await MainActor.run {
+            isLoading = false
+            if !ok {
+                errorMessage = """
+                Sign in failed.
+
+                If you just signed up, confirm your email first, then try again.
+
+                Otherwise, verify your email/password and try again.
+                """
                 showError = true
             }
         }
     }
-}
-
-
-
-
-#Preview {
-    LoginView()
-        .environmentObject(AuthenticationManager())
 }

@@ -4,7 +4,7 @@ struct OnboardingFlowView: View {
     let onCompletion: () -> Void
 
     var body: some View {
-        EmptyView()
+        Text("Loading Onboarding...")
             .onAppear {
                 onCompletion()
             }

@@ -1,9 +1,3 @@
-//
-//  ChessEloTests.swift
-//  ChessEloTests
-//
-//  Created by Ethan Reid on 01/02/2025.
-//
 
 import Testing
 @testable import ChessElo

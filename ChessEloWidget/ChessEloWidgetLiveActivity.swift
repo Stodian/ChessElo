@@ -72,9 +72,9 @@ extension ChessEloWidgetExtensionAttributes.ContentState {
      }
 }
 
-#Preview("Notification", as: .content, using: ChessEloWidgetExtensionAttributes.preview) {
-   ChessEloWidgetExtensionLiveActivity()
-} contentStates: {
-    ChessEloWidgetExtensionAttributes.ContentState.smiley
-    ChessEloWidgetExtensionAttributes.ContentState.starEyes
-}
+// #Preview("Notification", as: .content, using: ChessEloWidgetExtensionAttributes.preview) {
+//     ChessEloWidgetExtensionLiveActivity()
+// } contentStates: {
+//     ChessEloWidgetExtensionAttributes.ContentState.smiley
+//     ChessEloWidgetExtensionAttributes.ContentState.starEyes
+// }

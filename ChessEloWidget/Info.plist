@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>SUPABASE_ANON_KEY</key>
+	<string>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN1amVqYmlla3ZqemVyeG5zbGNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0Mzc1MTMsImV4cCI6MjA4NzAxMzUxM30.QMNwYUgQYG5-cRiiBdkUsm2Lz9N85d_1gpsp0PCA9zw</string>
+	<key>SUPABASE_URL</key>
+	<string>https://cujejbiekvjzerxnslcq.supabase.co</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionPointIdentifier</key>

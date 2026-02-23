@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.yourapp.chessstats</string>
+		<string>group.com.stodian.chesselo</string>
 	</array>
 </dict>
 </plist>

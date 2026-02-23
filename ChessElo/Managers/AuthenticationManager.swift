@@ -1,132 +1,196 @@
-import SwiftUI
+import Foundation
 
 @MainActor
-class AuthenticationManager: ObservableObject {
+final class AuthenticationManager: ObservableObject {
+
     @Published var isAuthenticated = false
-    @Published var userName = ""
-    @Published var chessUsername = ""
-    @Published var isOnboardingComplete: Bool = UserDefaults.standard.bool(forKey: "onboardingCompleted") // ✅ Global onboarding state
-    
-    private let userManager = UserManager.shared
-    private let supabaseManager = SupabaseManager.shared  // ✅ Use shared Supabase instance
+    @Published var isRestoring = true
+
+    @Published var email: String = ""
+    @Published var displayName: String = ""
+    @Published var chessUsername: String = ""
+    @Published var chessAvatarURL: String = ""
+
+    private let supabaseManager = SupabaseManager.shared
+    private let pendingChessUsernameKey = "pendingChessUsername"
+
+    enum SignupOutcome {
+        case emailConfirmationSent
+        case signedIn
+    }
 
     init() {
-        // Initialize by attempting to restore session
-        Task {
-            await restoreSession()
-        }
+        Task { await restoreSession() }
     }
 
-    // ✅ Restore session on launch
+    // MARK: - Restore session
     func restoreSession() async {
-        do {
-            let session = try await supabaseManager.supabase.auth.session // ✅ Fetch session
-            
-            print("✅ Session restored successfully: \(session)")
-            
-            // Update authentication state
-            await MainActor.run {
-                self.isAuthenticated = true
-            }
-            
-            // Fetch user information
-            await fetchUserInfo(userId: session.user.id.uuidString)
-        } catch {
-            print("❌ Error restoring session:", error.localizedDescription)
+        isRestoring = true
+        defer { isRestoring = false }
 
-            await MainActor.run {
-                self.isAuthenticated = false
-                self.userName = ""
-                self.chessUsername = ""
-            }
+        do {
+            await supabaseManager.resetAuthIfFreshInstallIfNeeded()
+            _ = try await supabaseManager.supabase.auth.refreshSession()
+
+            // session exists -> ensure users row exists, apply pending chess username
+            try await applyPendingChessUsernameIfAny()
+
+            // Enforce must exist in users table
+            try await validateUserRowExists()
+
+            isAuthenticated = true
+            await fetchUserInfo()
+
+        } catch {
+            await supabaseManager.signOut()
+            clearLocalState()
+            isAuthenticated = false
         }
     }
-    
-    // New method to fetch user info after session restoration
-    private func fetchUserInfo(userId: String) async {
+
+    // MARK: - Enforce users row exists
+    private func validateUserRowExists() async throws {
+        let session = try await supabaseManager.supabase.auth.session
+        let userId = session.user.id.uuidString
+
+        struct ExistsRow: Decodable { let id: String }
+
+        _ = try await supabaseManager.supabase
+            .from("users")
+            .select("id")
+            .eq("id", value: userId)
+            .single()
+            .execute()
+            .value as ExistsRow
+    }
+
+    // MARK: - Profile fetch
+    struct UserProfile: Decodable {
+        let email: String?
+        let display_name: String?
+        let chess_username: String?
+    }
+
+    private func fetchUserInfo() async {
         do {
-            let response = try await supabaseManager.supabase
+            let session = try await supabaseManager.supabase.auth.session
+            let userId = session.user.id.uuidString
+
+            let profile: UserProfile = try await supabaseManager.supabase
                 .from("users")
-                .select("email, chess_username")
+                .select("email, display_name, chess_username")
                 .eq("id", value: userId)
                 .single()
                 .execute()
-            
-            if let data = response.data as? [String: Any],
-               let email = data["email"] as? String,
-               let chessUsername = data["chess_username"] as? String {
-                
-                await MainActor.run {
-                    self.userName = email
-                    self.chessUsername = chessUsername
+                .value
+
+            let authEmail = session.user.email ?? ""
+            email = !authEmail.isEmpty ? authEmail : (profile.email ?? "")
+            displayName = profile.display_name ?? ""
+            chessUsername = profile.chess_username ?? ""
+
+            // Chess.com avatar (best-effort)
+            let u = chessUsername.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !u.isEmpty {
+                do {
+                    let chessProfile = try await ChessAPI.fetchPlayerProfile(for: u)
+                    chessAvatarURL = chessProfile.avatar ?? ""
+                } catch {
+                    chessAvatarURL = ""
                 }
-                
-                print("✅ User info retrieved: \(email), \(chessUsername)")
+            } else {
+                chessAvatarURL = ""
             }
         } catch {
-            print("❌ Error fetching user info: \(error.localizedDescription)")
+            // optional logging
         }
     }
-    
-    // ✅ Mark onboarding as complete
-    func completeOnboarding() {
-        UserDefaults.standard.set(true, forKey: "onboardingCompleted")
-        
-        DispatchQueue.main.async { // ✅ Ensure UI updates on main thread
-            self.isOnboardingComplete = true
-        }
+
+    /// Used by AccountDetailsView after saving to refresh avatar + latest values
+    func refreshProfile() async {
+        await fetchUserInfo()
     }
-    
-    func signUp(email: String, password: String, chessUsername: String) async {
+
+    // MARK: - Sign In
+    @discardableResult
+    func signIn(email: String, password: String) async -> Bool {
         do {
-            let user = try userManager.signUp(email: email, password: password, chessUsername: chessUsername)
-            updateAuthState(with: user)
+            let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
+
+            try await supabaseManager.signIn(email: trimmedEmail, password: password)
+
+            // now session exists -> ensure row, apply pending chess username
+            try await applyPendingChessUsernameIfAny()
+
+            // enforce must exist in users table
+            try await validateUserRowExists()
+
+            isAuthenticated = true
+            await fetchUserInfo()
+            return true
+
         } catch {
-            print("Signup error:", error.localizedDescription)
+            print("❌ signIn error:", String(reflecting: error))
+            isAuthenticated = false
+            return false
         }
     }
-    
-    func login(email: String, password: String) {
+
+    // MARK: - Sign Up
+    /// With email confirmations ON, this returns `.emailConfirmationSent`
+    func signUp(email: String, password: String, chessUsername: String) async -> (ok: Bool, outcome: SignupOutcome?) {
+        let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedChess = chessUsername.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        // store until we can write to users table
+        UserDefaults.standard.set(trimmedChess, forKey: pendingChessUsernameKey)
+        self.chessUsername = trimmedChess
+
         do {
-            let user = try userManager.signIn(email: email, password: password)
-            updateAuthState(with: user)
+            let response = try await supabaseManager.signUp(email: trimmedEmail, password: password)
+
+            // ✅ CASE A: Email confirmation ON -> no session yet
+            if response.session == nil {
+                isAuthenticated = false
+                return (true, .emailConfirmationSent)
+            }
+
+            // ✅ CASE B: Email confirmation OFF -> user is already signed in
+            try await applyPendingChessUsernameIfAny()     // creates users row + saves chess username
+            try await validateUserRowExists()
+
+            isAuthenticated = true
+            await fetchUserInfo()
+            return (true, .signedIn)
+
         } catch {
-            print("Login error:", error.localizedDescription)
+            print("❌ signUp error:", String(reflecting: error))
+            return (false, nil)
         }
     }
-    
-    // 🔥 Fix: `logout()` now properly logs out from Supabase
+
+    // MARK: - Logout
     func logout() async {
-        await supabaseManager.signOut() // ✅ Calls Supabase logout
-        await MainActor.run {
-            self.isAuthenticated = false
-            self.userName = ""
-            self.chessUsername = ""
-        }
+        await supabaseManager.signOut()
+        isAuthenticated = false
+        clearLocalState()
     }
-    
-    func updateUsername(_ newUsername: String) {
-        do {
-            try userManager.updateChessUsername(newUsername)
-            chessUsername = newUsername
-        } catch {
-            print("Update username error:", error.localizedDescription)
-        }
+
+    private func clearLocalState() {
+        email = ""
+        displayName = ""
+        chessUsername = ""
+        chessAvatarURL = ""
     }
-    
-    func refreshStats() async {
-        guard !chessUsername.isEmpty else { return }
-        do {
-            let stats = try await userManager.fetchStats(forUsername: chessUsername)
-            print("Stats updated:", stats)
-        } catch {
-            print("Refresh stats error:", error.localizedDescription)
+
+    // MARK: - Helpers
+    private func applyPendingChessUsernameIfAny() async throws {
+        let pendingChess = UserDefaults.standard.string(forKey: pendingChessUsernameKey)
+
+        try await supabaseManager.ensureUserProfileRow(chessUsernameIfProvided: pendingChess)
+
+        if pendingChess != nil {
+            UserDefaults.standard.removeObject(forKey: pendingChessUsernameKey)
         }
-    }
-    
-    private func updateAuthState(with user: User) {
-        isAuthenticated = true
-        userName = user.email
-        chessUsername = user.chessUsername ?? ""
     }
 }

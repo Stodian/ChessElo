@@ -1,0 +1,51 @@
+# =====================================
+# macOS
+# =====================================
+.DS_Store
+
+# =====================================
+# Xcode User Data (machine-specific)
+# =====================================
+*.xcuserstate
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+xcuserdata/
+
+# =====================================
+# Build Products
+# =====================================
+DerivedData/
+build/
+
+# =====================================
+# Swift Package Manager
+# =====================================
+.build/
+.swiftpm/
+
+# =====================================
+# Logs
+# =====================================
+*.log
+
+# =====================================
+# Fastlane (future use)
+# =====================================
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# =====================================
+# Secrets / Certificates
+# =====================================
+*.p12
+*.mobileprovision
+*.cer
+.env
+
+# =====================================
+# Temporary files
+# =====================================
+*.swp
+*.swo
